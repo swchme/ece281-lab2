@@ -1,6 +1,6 @@
 --+----------------------------------------------------------------------------
 --| 
---| COPYRIGHT 2017 United States Air Force Academy All rights reserved.
+--| COPYRIGHT 2018 United States Air Force Academy All rights reserved.
 --| 
 --| United States Air Force Academy     __  _______ ___    _________ 
 --| Dept of Electrical &               / / / / ___//   |  / ____/   |
@@ -10,10 +10,18 @@
 --| 
 --| ---------------------------------------------------------------------------
 --|
---| FILENAME      : thirtyOneDayMonth_tb.vhd (TEST BENCH)
---| AUTHOR(S)     : Capt Dan Johnson, ***Your Name Here***
---| CREATED       : 12/12/2019 Last Modified 06/24/2020
---| DESCRIPTION   : This file tests to ensure thirtyOneDayMonthMux works properly
+--| FILENAME      : top_basys3.vhd
+--| AUTHOR(S)     : Capt Phillip Warner
+--| CREATED       : 01/22/2018 Last modified 02/09/2023
+--| DESCRIPTION   : This file implements the top level module for a BASYS 3 to utilize 
+--|					a seven-segment decoder for displaying hex values on seven-segment 
+--|					displays (7SD) according to 4-bit inputs provided by switches.
+--|
+--|					Inputs:  sw (3:0)  --> 4-bit signal to deternmine 7SD value to be diplayed
+--|							 btnC	   --> activate 7SD
+--|
+--|					Output:  seg (6:0) --> 7-bit signal to activate the individual segments (active low)
+--|							 an (3:0)  --> 4-bit signal to control which display turns on (active low)
 --|
 --|
 --+----------------------------------------------------------------------------
@@ -21,8 +29,8 @@
 --| REQUIRED FILES :
 --|
 --|    Libraries : ieee
---|    Packages  : std_logic_1164, numeric_std, unisim
---|    Files     : thirtyOneDayMonth.vhd
+--|    Packages  : std_logic_1164, numeric_std
+--|    Files     : sevenSegDecoder.vhd
 --|
 --+----------------------------------------------------------------------------
 --|
@@ -49,54 +57,45 @@
 library ieee;
   use ieee.std_logic_1164.all;
   use ieee.numeric_std.all;
-  
-entity thirtyOneDayMonth_tb is --notice entity is empty.  The testbench has no external connections.
-end thirtyOneDayMonth_tb;
 
-architecture test_bench of thirtyOneDayMonth_tb is 
+
+entity top_basys3 is
+	port(
+		-- 7-segment display segments (cathodes CG ... CA)
+		seg		:	out std_logic_vector(6 downto 0);  -- seg(6) = CG, seg(0) = CA
+
+		-- 7-segment display active-low enables (anodes)
+		an      :	out std_logic_vector(3 downto 0);
+
+		-- Switches
+		sw		:	in  std_logic_vector(3 downto 0);
+		
+		-- Buttons
+		btnC	:	in	std_logic
+
+	);
+end top_basys3;
+
+architecture top_basys3_arch of top_basys3 is 
 	
-  -- declare the component of your top-level design unit under test (UUT) (looks very similar to entity declaration)
-  component thirtyoneDayMonth is
-    port(
-	i_A : in std_logic;
-	i_B : in std_logic;
-	i_C : in std_logic;
-	i_D : in std_logic;
-	o_Y : out std_logic
-    );	
-  end component;
+  -- declare the component of your top-level design unit under test (UUT)
 
-  -- declare any additional components required
-  
-  signal w_sw : std_logic_vector (3 downto 0):= (others=> '0');
-  signal w_Y : std_logic := '0';
+
+  -- create wire to connect button to 7SD enable (active-low)
 
   
 begin
 	-- PORT MAPS ----------------------------------------
-	-- map ports for any component instances (port mapping is like wiring hardware)
-    thirtyOneDayMonthMux_inst : thirtyOneDayMonth port map (
-			i_A => w_sw(3),
-			i_B => w_sw(2),
-			i_C => w_sw(1),
-			i_D => w_sw(0),
-			o_Y => w_Y
-        );
-	-----------------------------------------------------
 
-	-- PROCESSES ----------------------------------------	
-	-- Test Plan Process --------------------------------
-	-- Implement the test plan here.  Body of process is continuous from time = 0  
-	test_process : process 
-	begin
-	-- Place test cases here. The first two have been written for you
-		w_sw <= x"0"; wait for 10 ns;
-            assert w_Y = '0' report "error on x0" severity failure;
-        w_sw <= x"1"; wait for 10 ns;
-            assert w_Y = '1' report "error on Jan" severity failure;   
-
-		wait; -- wait forever
-	end process;	
+	--	Port map: wire your component up to the switches and seven-segment display cathodes
 	-----------------------------------------------------	
 	
-end test_bench;
+	
+	-- CONCURRENT STATEMENTS ----------------------------
+	
+	-- wire up active-low 7SD anode (active low) to button (active-high)
+	-- display 7SD 0 only when button pushed
+	-- other 7SD are kept off
+	-----------------------------------------------------
+	
+end top_basys3_arch;
