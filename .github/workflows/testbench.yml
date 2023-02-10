@@ -1,6 +1,6 @@
 ---
 env:
-  TESTBENCH_ENTITY: 
+  TESTBENCH_ENTITY: sevenSegDecoder
 
 name: GHDL Testbench
 on: [push]
@@ -15,11 +15,11 @@ jobs:
       - run: ghdl --version
       - name: Check out repository code
         uses: actions/checkout@v3
-      - run: ghdl analyze -v src/hdl/$TESTBENCH_ENTITY.vhd
-      - run: ghdl analyze -v src/hdl/$TESTBENCH_ENTITY_tb.vhd
+      - run: ghdl analyze -v src/hdl/${TESTBENCH_ENTITY}.vhd
+      - run: ghdl analyze -v src/hdl/${TESTBENCH_ENTITY}_tb.vhd
       - run: ls -R
-      - run: ghdl elaborate -v $TESTBENCH_ENTITY_tb
-      - run: ghdl run -v $TESTBENCH_ENTITY_tb
+      - run: ghdl elaborate -v ${TESTBENCH_ENTITY}_tb
+      - run: ghdl run -v ${TESTBENCH_ENTITY}_tb
 
   Instructor-Testbench:
     runs-on: ubuntu-latest
@@ -31,9 +31,9 @@ jobs:
       - run: ghdl --version
       - name: Check out repository code
         uses: actions/checkout@v3
-      - run: cat .github/testfile | base64 -d > src/hdl/$TESTBENCH_ENTITY_tb.vhd
-      - run: ghdl analyze -v src/hdl/$TESTBENCH_ENTITY.vhd
-      - run: ghdl analyze -v src/hdl/$TESTBENCH_ENTITY_tb.vhd
+      - run: cat .github/testfile | base64 -d > src/hdl/${TESTBENCH_ENTITY}_tb.vhd
+      - run: ghdl analyze -v src/hdl/${TESTBENCH_ENTITY}.vhd
+      - run: ghdl analyze -v src/hdl/${TESTBENCH_ENTITY}_tb.vhd
       - run: ls -R
-      - run: ghdl elaborate -v $TESTBENCH_ENTITY_tb
-      - run: ghdl run -v $TESTBENCH_ENTITY_tb
+      - run: ghdl elaborate -v ${TESTBENCH_ENTITY}_tb
+      - run: ghdl run -v ${TESTBENCH_ENTITY}_tb
