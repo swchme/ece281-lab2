@@ -1,10 +1,12 @@
-# Lab 1: Thirty-One Day Month
+# Lab 2: Top Level Full-Adder
 
-VHDL template for ECE 281 [Lab 1](https://usafa-ece.github.io/ece281-book/lab/lab1.html)
+VHDL for ECE 281 [Lab 2](https://usafa-ece.github.io/ece281-book/lab/lab2.html)
 
 Targeted toward Digilent Basys3. Make sure to install the [board files](https://github.com/Xilinx/XilinxBoardStore/tree/2018.2/boards/Digilent/basys3).
 
-Tested on Windows 10.
+Tested on Windows 11.
+
+---
 
 ## Usage
 

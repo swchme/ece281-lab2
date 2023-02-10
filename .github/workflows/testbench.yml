@@ -1,4 +1,7 @@
 ---
+env:
+  TESTBENCH_ENTITY: 
+
 name: GHDL Testbench
 on: [push]
 jobs:
@@ -8,15 +11,15 @@ jobs:
       - name: Setup GHDL nightly
         uses: ghdl/setup-ghdl-ci@nightly
         with:
-          yambackend: llvm
+          backend: llvm
       - run: ghdl --version
       - name: Check out repository code
         uses: actions/checkout@v3
-      - run: ghdl analyze -v src/hdl/thirtyOneDayMonth.vhd
-      - run: ghdl analyze -v src/hdl/thirtyOneDayMonth_tb.vhd
+      - run: ghdl analyze -v src/hdl/$TESTBENCH_ENTITY.vhd
+      - run: ghdl analyze -v src/hdl/$TESTBENCH_ENTITY_tb.vhd
       - run: ls -R
-      - run: ghdl elaborate -v thirtyOneDayMonth_tb
-      - run: ghdl run -v thirtyOneDayMonth_tb
+      - run: ghdl elaborate -v $TESTBENCH_ENTITY_tb
+      - run: ghdl run -v $TESTBENCH_ENTITY_tb
 
   Instructor-Testbench:
     runs-on: ubuntu-latest
@@ -24,13 +27,13 @@ jobs:
       - name: Setup GHDL nightly
         uses: ghdl/setup-ghdl-ci@nightly
         with:
-          yambackend: llvm
+          backend: llvm
       - run: ghdl --version
       - name: Check out repository code
         uses: actions/checkout@v3
-      - run: cat .github/testfile | base64 -d > src/hdl/thirtyOneDayMonth_tb.vhd
-      - run: ghdl analyze -v src/hdl/thirtyOneDayMonth.vhd
-      - run: ghdl analyze -v src/hdl/thirtyOneDayMonth_tb.vhd
+      - run: cat .github/testfile | base64 -d > src/hdl/$TESTBENCH_ENTITY_tb.vhd
+      - run: ghdl analyze -v src/hdl/$TESTBENCH_ENTITY.vhd
+      - run: ghdl analyze -v src/hdl/$TESTBENCH_ENTITY_tb.vhd
       - run: ls -R
-      - run: ghdl elaborate -v thirtyOneDayMonth_tb
-      - run: ghdl run -v thirtyOneDayMonth_tb
+      - run: ghdl elaborate -v $TESTBENCH_ENTITY_tb
+      - run: ghdl run -v $TESTBENCH_ENTITY_tb
