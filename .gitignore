@@ -28,6 +28,8 @@
 
 # don't ignore markdown
 !*.md
+!*.png
+!*.jpg
 
 # don't ignore .github
 !.github/
