@@ -1,6 +1,6 @@
 --+----------------------------------------------------------------------------
 --| 
---| COPYRIGHT 2018 United States Air Force Academy All rights reserved.
+--| COPYRIGHT 2025 United States Air Force Academy All rights reserved.
 --| 
 --| United States Air Force Academy     __  _______ ___    _________ 
 --| Dept of Electrical &               / / / / ___//   |  / ____/   |
@@ -11,8 +11,8 @@
 --| ---------------------------------------------------------------------------
 --|
 --| FILENAME      : top_basys3.vhd
---| AUTHOR(S)     : Capt Phillip Warner
---| CREATED       : 01/22/2018 Last modified 02/09/2023
+--| AUTHOR(S)     : Capt Phillip Warner & Capt Brian Yarbrough
+--| CREATED       : 01/22/2018 Last modified 02/18/2025
 --| DESCRIPTION   : This file implements the top level module for a BASYS 3 to utilize 
 --|					a seven-segment decoder for displaying hex values on seven-segment 
 --|					displays (7SD) according to 4-bit inputs provided by switches.
@@ -78,7 +78,7 @@ end top_basys3;
 
 architecture top_basys3_arch of top_basys3 is 
 	
-  -- declare the component of your top-level design unit under test (UUT)
+  -- declare the component of your top-level design
 
 
   -- create wire to connect button to 7SD enable (active-low)
