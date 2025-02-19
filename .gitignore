@@ -7,30 +7,28 @@
 
 # don't ignore hardware description files
 !src/
-!src/**/
-!src/**/*.vhd
-!src/**/*.xdc
-!src/**/*.bd
-!src/**/*.bit
+!src/**
 
 # or configuration files
 !cfg/
-!cfg/**/*.wcfg
+!cfg/**
 
-# don't ignore build files
-!build.tcl
-!build.bat
+# or the project file
+!*.xpr
 
 # don't ignore bitstream
 !*.runs/
-!*.runs/**/
-!*.runs/**/*.bit
+!*.runs/**
 
 # don't ignore markdown
 !*.md
+
+# don't ignore images
 !*.png
 !*.jpg
+!*.pdf
+!*.gif
 
 # don't ignore .github
 !.github/
-!.github/**/*
+!.github/**
