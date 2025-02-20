@@ -15,10 +15,11 @@
 
 # or the project file
 !*.xpr
+!*.wcfg
 
 # don't ignore bitstream
 !*.runs/
-!*.runs/**
+!*.runs/*.bit
 
 # don't ignore markdown
 !*.md
