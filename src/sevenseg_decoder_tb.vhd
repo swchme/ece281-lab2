@@ -1,84 +1,107 @@
+ 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.NUMERIC_STD.ALL;  -- Required for to_unsigned function
-
+ 
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+use IEEE.NUMERIC_STD.ALL;
+ 
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+library UNISIM;
+use UNISIM.VComponents.all;
+ 
 entity sevenseg_decoder_tb is
-    -- Testbench does NOT have input/output ports
+--    Port ( i_Hex : in STD_LOGIC_VECTOR (3 downto 0);
+--           o_seg_n : out STD_LOGIC_VECTOR (6 downto 0));
 end sevenseg_decoder_tb;
-
-architecture testbench of sevenseg_decoder_tb is
-    -- Component declaration for the Unit Under Test (UUT)
-    component sevenseg_decoder
-        Port (
-            i_Hex  : in  std_logic_vector (3 downto 0);
-            o_seg_n : out std_logic_vector (6 downto 0)
+ 
+architecture Behavioral of sevenseg_decoder_tb is
+    component sevenseg_decoder is
+        port( 
+        i_Hex : in std_logic_vector (3 downto 0);
+        o_seg_n : out std_logic_vector (6 downto 0)
         );
     end component;
-
-    -- Signals to connect to the UUT
-    signal i_Hex_tb  : std_logic_vector (3 downto 0);
-    signal o_seg_n_tb : std_logic_vector (6 downto 0);
-
-    -- Array of expected outputs for inputs 0 to F
-    type slv_array is array (0 to 15) of std_logic_vector(6 downto 0);
-    constant expected_outputs: slv_array := (
-        "1000000", -- 0
-        "1111001", -- 1
-        "0100100", -- 2
-        "0110000", -- 3
-        "0011001", -- 4
-        "0010010", -- 5
-        "0000010", -- 6
-        "1111000", -- 7
-        "0000000", -- 8
-        "0010000", -- 9
-        "0001000", -- A
-        "0000011", -- B
-        "1000110", -- C
-        "0100001", -- D
-        "0000110", -- E
-        "0001110"  -- F
-    );
-
-    -- Function to convert std_logic_vector to string for reporting
-    function slv_to_string(slv: std_logic_vector) return string is
-        variable result: string(1 to slv'length);
-    begin
-        for i in slv'range loop
-            if slv(i) = '1' then
-                result(i + 1) := '1';
-            else
-                result(i + 1) := '0';
-            end if;
-        end loop;
-        return result;
-    end function;
-
+    signal wi_Hex   : std_logic_vector(3 downto  0);
+    signal wo_seg_n : std_logic_vector(6 downto  0);
+ 
+ 
 begin
-    -- Instantiate the sevenseg_decoder
     sevenseg_decoder_inst : sevenseg_decoder port map (
-        i_Hex  => i_Hex_tb,
-        o_seg_n => o_seg_n_tb
+    i_Hex => wi_Hex,
+    o_seg_n => wo_seg_n
     );
-
-    -- Stimulus process
+ 
     test_process : process
     begin
-        -- Iterate through all possible 4-bit values (0 to F)
-        for i in 0 to 15 loop
-            i_Hex_tb <= std_logic_vector(to_unsigned(i, 4));  -- Convert integer to std_logic_vector
-            wait for 10 ns;  -- Wait time for each test 
-
-            -- Check if output matches expected value
-            assert (o_seg_n_tb = expected_outputs(i))
-                report "Error: Input = x""" & integer'image(i) & """ produced output = " &
-                       slv_to_string(o_seg_n_tb) & ", expected = " &
-                       slv_to_string(expected_outputs(i))
-                severity error;
-        end loop;
-
-        -- End simulation after all cases are tested
+        wi_Hex  <= x"0"; wait for 10 ns;
+            assert wo_seg_n = "1000000" report "error on x0" severity failure;
+       
+       
+        wi_Hex  <= x"1"; wait for 10 ns;
+            assert wo_seg_n = "1111001" report "error on x1" severity failure;
+       
+       
+        wi_Hex  <= x"2"; wait for 10 ns;
+            assert wo_seg_n = "0100100" report "error on x2" severity failure;
+        
+        
+         wi_Hex  <= x"3"; wait for 10 ns;
+       
+       
+            assert wo_seg_n = "0110000" report "error on x3" severity failure;
+        wi_Hex  <= x"4"; wait for 10 ns;
+            assert wo_seg_n = "0011001" report "error on x4" severity failure;
+        
+        
+        wi_Hex  <= x"5"; wait for 10 ns;
+            assert wo_seg_n = "0010010" report "error on x5" severity failure;
+        
+        
+        wi_Hex  <= x"6"; wait for 10 ns;
+            assert wo_seg_n = "0000010" report "error on x6" severity failure;
+        
+        
+        wi_Hex  <= x"7"; wait for 10 ns;
+            assert wo_seg_n = "1111000" report "error on x7" severity failure;
+        
+        
+        wi_Hex  <= x"8"; wait for 10 ns;
+            assert wo_seg_n = "0000000" report "error on x8" severity failure;
+       
+       
+        wi_Hex  <= x"9"; wait for 10 ns;
+            assert wo_seg_n = "0011000" report "error on x9" severity failure;
+       
+       
+        wi_Hex  <= x"A"; wait for 10 ns;
+            assert wo_seg_n = "0001000" report "error on xA" severity failure;
+        
+        
+        wi_Hex  <= x"B"; wait for 10 ns;
+            assert wo_seg_n = "0000011" report "error on xB" severity failure;
+        
+        
+        
+        
+        wi_Hex  <= x"C"; wait for 10 ns;
+            assert wo_seg_n = "0100111" report "error on xC" severity failure;
+        
+        
+        wi_Hex  <= x"D"; wait for 10 ns;
+            assert wo_seg_n = "0100001" report "error on xD" severity failure;
+       
+       
+        wi_Hex  <= x"E"; wait for 10 ns;
+            assert wo_seg_n = "0000110" report "error on xE" severity failure;
+       
+       
+        wi_Hex  <= x"F"; wait for 10 ns;
+            assert wo_seg_n = "0001110" report "error on xF" severity failure;
         wait;
+        
+        
     end process;
-
-end testbench;
+ 
+end Behavioral;
