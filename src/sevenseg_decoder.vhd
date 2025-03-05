@@ -61,7 +61,7 @@ begin
                    "1111111" when others; -- All segments off for undefined values
 
     -- Active-low output
-    o_seg_n <= NOT w_seg; 
+    o_seg_n <= w_seg; 
 
 end Behavioral;
  
