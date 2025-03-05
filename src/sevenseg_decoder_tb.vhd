@@ -72,7 +72,7 @@ begin
        
        
         wi_Hex  <= x"9"; wait for 10 ns;
-            assert wo_seg_n = "0011000" report "error on x9" severity failure;
+            assert wo_seg_n = "0010000" report "error on x9" severity failure;
        
        
         wi_Hex  <= x"A"; wait for 10 ns;
