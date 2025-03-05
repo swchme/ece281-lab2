@@ -54,7 +54,7 @@ begin
                    "0011000" when x"9",  -- 9
                    "0001000" when x"A",  -- A
                    "0000011" when x"B",  -- B
-                   "1000110" when x"C",  -- C
+                   "0100111" when x"C",  -- C
                    "0100001" when x"D",  -- D
                    "0000110" when x"E",  -- E
                    "0001110" when x"F",  -- F
